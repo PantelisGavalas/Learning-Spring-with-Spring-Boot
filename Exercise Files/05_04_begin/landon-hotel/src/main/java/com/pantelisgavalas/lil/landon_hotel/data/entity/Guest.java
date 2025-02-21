@@ -11,7 +11,13 @@ import lombok.ToString;
 public class Guest {
     @Id
     @Column(name="guest_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    // Check IDENTITY vs AUTO GenerationType.
+    // In summary:
+    // AUTO is more flexible but can lead to issues if Hibernate chooses a strategy
+    //      that's not fully supported or configured in your database.
+    // IDENTITY is more specific and tells Hibernate to use the database's identity
+    //      column feature, which is usually the simplest and most reliable approach.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name="first_name")
     private String firstName;
